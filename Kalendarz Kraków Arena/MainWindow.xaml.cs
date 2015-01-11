@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
-
+using System.Security.Cryptography;
 namespace Kalendarz_Kraków_Arena
 {
     /// <summary>
@@ -23,6 +23,19 @@ namespace Kalendarz_Kraków_Arena
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static string getHashSha256(string text)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            SHA256Managed hashstring = new SHA256Managed();
+            byte[] hash = hashstring.ComputeHash(bytes);
+            string hashString = string.Empty;
+            foreach (byte x in hash)
+            {
+                hashString += String.Format("{0:x2}", x);
+            }
+            return hashString;
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +60,7 @@ namespace Kalendarz_Kraków_Arena
                 capswarn.Visibility = Visibility.Visible;
             else
                 capswarn.Visibility = Visibility.Hidden;
+            warn.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -60,27 +74,34 @@ namespace Kalendarz_Kraków_Arena
                 MySqlConnection.ClearPool(conn);
                 conn.Open();
 
-                /*
-                MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM komputer", conn);
+                
+                MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM uzytkownicy WHERE Login='"+login.Text+"';", conn);
 
                 MySqlDataReader reader = filmsCommand.ExecuteReader();
-
-                string name = "";
-                int id = 0;
-
+                string passs = "";
+                string hashedPass = getHashSha256(pass.Password);
                 while (reader.Read())
                 {
-                    id += reader.GetInt32("id_komp");
-                    name += reader.GetString("model");
+                   
+                    passs = reader.GetString("Haslo");
+                    //name += reader.GetString("model");
                 }
-                
-                conn.Close();
-                 */
-                capswarn.Content = conn.ServerVersion; 
 
-            Window Kalendarz = new Kalendarz();
+                if (passs == hashedPass)
+                {
+                    conn.Close();
+                    Window Kalendarz = new Kalendarz();
+                    Kalendarz.Show();
+                    this.Close();
+                }
+                else
+                {
+                    warn.Visibility = Visibility.Visible;
+                }
 
-            Kalendarz.Show();
+
+
+
         }
     }
 }

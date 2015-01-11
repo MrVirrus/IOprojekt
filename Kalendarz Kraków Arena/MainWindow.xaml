@@ -6,10 +6,11 @@
         <Label Content="Logowanie" HorizontalAlignment="Left" Margin="338,58,0,0" VerticalAlignment="Top" FontSize="24"/>
         <Label Content="Login:" HorizontalAlignment="Left" Margin="252,158,0,0" VerticalAlignment="Top" FontSize="18"/>
         <Label Content="Hasło:" HorizontalAlignment="Left" Margin="252,197,0,0" VerticalAlignment="Top" FontSize="18"/>
-        <TextBox HorizontalAlignment="Left" Height="34" Margin="337,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" FontSize="18"/>
-        <PasswordBox HorizontalAlignment="Left" Margin="338,201,0,0" VerticalAlignment="Top" FontSize="18" Height="32" Width="177" KeyDown="PasswordBox_KeyDown"/>
+        <TextBox x:Name="login" HorizontalAlignment="Left" Height="34" Margin="337,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" FontSize="18"/>
+        <PasswordBox x:Name="pass" HorizontalAlignment="Left" Margin="338,201,0,0" VerticalAlignment="Top" FontSize="18" Height="32" Width="177" KeyDown="PasswordBox_KeyDown"/>
         <Button Content="Zaloguj" HorizontalAlignment="Left" Margin="364,295,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Button_Click"/>
         <Label x:Name="capswarn" Content="Klawisz CapsLock jest włączony!" HorizontalAlignment="Left" Margin="336,238,0,0" VerticalAlignment="Top" Foreground="Red"/>
+        <Label x:Name="warn" Content="Niepoprawny login i/lub hasło" HorizontalAlignment="Left" Margin="338,260,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
