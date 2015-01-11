@@ -53,17 +53,13 @@ namespace Kalendarz_Kraków_Arena
         {
 
 
-<<<<<<< Updated upstream
-=======
 
-           
->>>>>>> Stashed changes
                 MySqlConnection conn;
                 string cn = "server=89.68.24.235; user id=user; password='Spectro2005'; database=ioproj";
                 conn = new MySql.Data.MySqlClient.MySqlConnection(cn);
                 MySqlConnection.ClearPool(conn);
                 conn.Open();
-<<<<<<< Updated upstream
+
                 /*
                 MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM komputer", conn);
 
@@ -80,9 +76,6 @@ namespace Kalendarz_Kraków_Arena
                 
                 conn.Close();
                  */
-=======
-
->>>>>>> Stashed changes
                 capswarn.Content = conn.ServerVersion; 
 
             Window Kalendarz = new Kalendarz();
