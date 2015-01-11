@@ -1,0 +1,15 @@
+﻿<Window x:Class="Kalendarz_Kraków_Arena.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="434.398" Width="788.121" Icon="D:\Kalendarz Kraków Arena\Kalendarz Kraków Arena\ico.ico" KeyDown="Window_KeyDown" Loaded="Window_Loaded">
+    <Grid>
+        <Label Content="Logowanie" HorizontalAlignment="Left" Margin="338,58,0,0" VerticalAlignment="Top" FontSize="24"/>
+        <Label Content="Login:" HorizontalAlignment="Left" Margin="252,158,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <Label Content="Hasło:" HorizontalAlignment="Left" Margin="252,197,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <TextBox HorizontalAlignment="Left" Height="34" Margin="337,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" FontSize="18"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="338,201,0,0" VerticalAlignment="Top" FontSize="18" Height="32" Width="177" KeyDown="PasswordBox_KeyDown"/>
+        <Button Content="Zaloguj" HorizontalAlignment="Left" Margin="364,295,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Button_Click"/>
+        <Label x:Name="capswarn" Content="Klawisz CapsLock jest włączony!" HorizontalAlignment="Left" Margin="336,238,0,0" VerticalAlignment="Top" Foreground="Red"/>
+
+    </Grid>
+</Window>
