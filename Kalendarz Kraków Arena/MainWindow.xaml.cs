@@ -53,33 +53,28 @@ namespace Kalendarz_Kraków_Arena
         {
 
 
-
-            try
-            {
                 MySqlConnection conn;
-                string cn = "server=localhost; user id=user; password='haselko'; database=pai_proj";
+                string cn = "server=89.68.24.235; user id=user; password='Spectro2005'; database=ioproj";
                 conn = new MySql.Data.MySqlClient.MySqlConnection(cn);
+                MySqlConnection.ClearPool(conn);
                 conn.Open();
-                
-                string mySelectQuery = "SELECT * FROM Patient";
-                MySqlCommand filmsCommand = new MySqlCommand(mySelectQuery, conn);
+                /*
+                MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM komputer", conn);
 
                 MySqlDataReader reader = filmsCommand.ExecuteReader();
 
+                string name = "";
+                int id = 0;
+
                 while (reader.Read())
                 {
-                    int Numero = reader.GetInt16("Num");
-                    string name = reader.GetString("Nom");
+                    id += reader.GetInt32("id_komp");
+                    name += reader.GetString("model");
                 }
                 
-                filmsCommand.Connection.Close();
-                 
+                conn.Close();
+                 */
                 capswarn.Content = conn.ServerVersion; 
-            }
-            catch
-            {
-                MessageBox.Show("db error");
-            }
 
             Window Kalendarz = new Kalendarz();
 
