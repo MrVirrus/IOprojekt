@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace Kalendarz_Kraków_Arena
 {
@@ -48,6 +51,36 @@ namespace Kalendarz_Kraków_Arena
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+
+
+            try
+            {
+                MySqlConnection conn;
+                string cn = "server=localhost; user id=user; password='haselko'; database=pai_proj";
+                conn = new MySql.Data.MySqlClient.MySqlConnection(cn);
+                conn.Open();
+                
+                string mySelectQuery = "SELECT * FROM Patient";
+                MySqlCommand filmsCommand = new MySqlCommand(mySelectQuery, conn);
+
+                MySqlDataReader reader = filmsCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    int Numero = reader.GetInt16("Num");
+                    string name = reader.GetString("Nom");
+                }
+                
+                filmsCommand.Connection.Close();
+                 
+                capswarn.Content = conn.ServerVersion; 
+            }
+            catch
+            {
+                MessageBox.Show("db error");
+            }
+
             Window Kalendarz = new Kalendarz();
 
             Kalendarz.Show();
