@@ -14,7 +14,10 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_Wyjdź"/>
-                <MenuItem Header="_Ustawienia" Click="MenuItem_Click"/>
+                <MenuItem Header="_Ustawienia">
+                    <MenuItem Header="_Połączenie" Click="MenuItem_Click"/>
+                    <MenuItem Header="_Admin Panel" />
+                </MenuItem>
                 <MenuItem Header="_Autorzy"/>
             </Menu>
             <StackPanel></StackPanel>
