@@ -18,11 +18,35 @@ using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 namespace Kalendarz_Kraków_Arena
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
+        string connectionString="";
+        public static string decode(string n)
+        {
+            string[] s = System.IO.File.ReadAllLines(@n);
+            string wynik = "";
+            int integer = 0;
+            int seed = 9;
+            foreach (string str in s)
+            {
+                if (str != "")
+                {
+                    if (str[str.Length - 1] == 'f')
+                    {
+                        integer = Convert.ToInt16(str.TrimEnd('f'));
+                        wynik += (char)(integer - 9);
+                    }
+                    else
+                    {
+                        integer = Convert.ToInt16(str.TrimEnd('b'));
+                        if (integer % 2 == 0) seed = 9; else seed = 6;
+                        wynik += (char)(integer - 6);
+                    }
+                }
+            }
+            return wynik;
+        }
         public static string getHashSha256(string text)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(text);
@@ -39,6 +63,7 @@ namespace Kalendarz_Kraków_Arena
         public MainWindow()
         {
             InitializeComponent();
+            
         }
 
         private void PasswordBox_KeyDown(object sender, KeyEventArgs e)
@@ -67,10 +92,10 @@ namespace Kalendarz_Kraków_Arena
         {
 
 
-
+                connectionString = decode("any.txt");
                 MySqlConnection conn;
-                string cn = "server=89.68.24.235; user id=user; password='Spectro2005'; database=ioproj";
-                conn = new MySql.Data.MySqlClient.MySqlConnection(cn);
+
+                conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
                 MySqlConnection.ClearPool(conn);
                 conn.Open();
 
@@ -102,6 +127,18 @@ namespace Kalendarz_Kraków_Arena
 
 
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+            
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Window ConnectionSettings = new ConnectionSettings();
+            ConnectionSettings.Show();
         }
     }
 }
