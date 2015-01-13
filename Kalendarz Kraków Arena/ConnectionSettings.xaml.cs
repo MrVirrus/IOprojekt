@@ -18,65 +18,16 @@ namespace Kalendarz_Kraków_Arena
     public partial class ConnectionSettings : Window
     {
         public static string connectionString = "";
-        private static void encode(string s, string n)
-        {
+        public static string connectionStringBackup = "";
+        DBconnect connection = new DBconnect();
 
-            string wynik = "";
-            string[] tab = new string[300];
-            int seed = 9;
-            int j = 0;
-            foreach (char i in s)
-            {
-                if ((int)i % 2 == 0)
-                {
-                    wynik += (int)i + 9;
-                    tab[j] = wynik + "f";
-                    wynik = "";
-                    j++;
-                }
-                else
-                {
-                    wynik += (int)i + 6;
-                    tab[j] = wynik + "b";
-                    wynik = "";
-                    j++;
-                }
-
-            }
-
-            System.IO.File.WriteAllLines(@n, tab);
-        }
-        public static string decode(string n)
-        {
-            string[] s = System.IO.File.ReadAllLines(@n);
-            string wynik = "";
-            int integer = 0;
-            int seed = 9;
-            foreach (string str in s)
-            {
-                if (str != "")
-                {
-                    if (str[str.Length - 1] == 'f')
-                    {
-                        integer = Convert.ToInt16(str.TrimEnd('f'));
-                        wynik += (char)(integer - 9);
-                    }
-                    else
-                    {
-                        integer = Convert.ToInt16(str.TrimEnd('b'));
-                        if (integer % 2 == 0) seed = 9; else seed = 6;
-                        wynik += (char)(integer - 6);
-                    }
-                }
-            }
-            return wynik;
-        }
         private static string[] dane = new string[4];
         public ConnectionSettings()
         {
 
             InitializeComponent();
-            connectionString = decode("any.txt");
+
+            connectionString = connection.decode();
             if (connectionString != "")
             {
                 connectionString = connectionString.Replace("server=", "");
@@ -96,22 +47,23 @@ namespace Kalendarz_Kraków_Arena
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             connectionString = "server=" + host.Text + "; user id=" + login.Text + "; password='" + pwd.Password + "'; database=" + db.Text+";";
+            connection.encode(connectionString);
             MySqlConnection conn;
 
-            try
+            if(connection.isConnected())
             {
                 conn = new MySqlConnection(connectionString);
                 conn.Open();
-                encode(connectionString, "any.txt");
                 CS.Content = "Połączono";
+                connectionStringBackup = connectionString;
             }
-            catch (MySqlException ex)
+            else
             {
-                CS.Content="Brak połączenia z bazą";
+                CS.Content = "Brak połączenia z bazą";
+                if(connectionStringBackup!="")  connection.encode(connectionStringBackup);
             }
-
-
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
