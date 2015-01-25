@@ -59,7 +59,15 @@ namespace Kalendarz_Kraków_Arena
         {
             off((Rectangle)sender);
         }
-
+        private void Zamknij(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void O_programie(object sender, RoutedEventArgs e)
+        {
+            Window pom = new O_programie();
+            pom.Show();
+        }
 
         private void RecMouseDown(object sender, MouseEventArgs e)
         {
@@ -149,6 +157,17 @@ namespace Kalendarz_Kraków_Arena
             
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (AdminMenu.Visibility == System.Windows.Visibility.Visible) AdminMenu.Visibility = System.Windows.Visibility.Hidden;
+            else AdminMenu.Visibility = System.Windows.Visibility.Visible;
+        }
+        private void Historia_OpenWindow(object sender, RoutedEventArgs e)
+        {
+            Window historia = new Historia();
+            historia.Show();
+        }
+        
 
 
         

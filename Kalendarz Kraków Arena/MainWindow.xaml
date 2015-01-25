@@ -8,17 +8,14 @@
         <Label Content="Hasło:" HorizontalAlignment="Left" Margin="252,197,0,0" VerticalAlignment="Top" FontSize="18"/>
         <TextBox x:Name="login" HorizontalAlignment="Left" Height="34" Margin="337,160,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="177" FontSize="18"/>
         <PasswordBox x:Name="pass" HorizontalAlignment="Left" Margin="338,201,0,0" VerticalAlignment="Top" FontSize="18" Height="32" Width="177" KeyDown="PasswordBox_KeyDown"/>
-        <Button Content="Zaloguj" HorizontalAlignment="Left" Margin="364,295,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Button_Click"/>
+        <Button Content="Zaloguj" HorizontalAlignment="Left" IsDefault="True" Margin="364,295,0,0" VerticalAlignment="Top" Width="75" FontSize="16" Click="Button_Click"/>
         <Label x:Name="capswarn" Content="Klawisz CapsLock jest włączony!" HorizontalAlignment="Left" Margin="336,238,0,0" VerticalAlignment="Top" Foreground="Red"/>
         <Label x:Name="warn" Content="Niepoprawny login i/lub hasło" HorizontalAlignment="Left" Margin="338,260,0,0" VerticalAlignment="Top"/>
         <DockPanel>
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Wyjdź"/>
-                <MenuItem Header="_Ustawienia">
-                    <MenuItem Header="_Połączenie" Click="MenuItem_Click"/>
-                    <MenuItem Header="_Admin Panel" />
-                </MenuItem>
-                <MenuItem Header="_Autorzy"/>
+            <Menu DockPanel.Dock="Top">                                
+                <MenuItem Header="_Połączenie" Click="MenuItem_Click"/>
+                <MenuItem Header="_O programie" Click="O_programie"/>
+                <MenuItem Header="_Wyjdź" Click="Zamknij"/>
             </Menu>
             <StackPanel></StackPanel>
         </DockPanel>

@@ -1,15 +1,36 @@
 ﻿<Window x:Class="Kalendarz_Kraków_Arena.Kalendarz"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Kalendarz" Height="757.617" Width="1002.929" Loaded="Window_Loaded">
-    <Grid Name="myGrid" Margin="0,0,0,102">
+        Title="Kalendarz" Height="800" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MinHeight="800" MinWidth="1000">
+    <Grid Name="myGrid">
+        <Menu VerticalAlignment="Top">
+            
 
+            <MenuItem Header="Historia">
+                <MenuItem Header="Historia" Click="Historia_OpenWindow"/>
+            </MenuItem>
 
+            <MenuItem Header="Raporty">
+                <MenuItem Header="Raport Podstawowy"/>
+                <MenuItem Header="Raport Zaawansowany"/>
+                <MenuItem Header="Raport Html"/>
+                <MenuItem Header="Raport Niestandardowy"/>
+            </MenuItem>
+            <MenuItem Header="Opcje Personalne"/>
+            <Separator/>
+            <MenuItem Header="_O programie" Click="O_programie"/>
+            <MenuItem Header="_Wyjdź" Click="Zamknij"/>
+            <MenuItem x:Name="AdminMenu" Header="Admin" Visibility="Hidden">
+                <MenuItem Header="Zarządzaj uzytkownikami" />
+                <MenuItem Header="Stworz backup"/>
+            </MenuItem>
+        </Menu>
 
-        <Label x:Name="miesiac" Content="MIESIAC I ROK TUTEJ" Margin="0,21,0,0" FontSize="36" HorizontalAlignment="Center"/>
+        <Label x:Name="miesiac" Content="MIESIAC I ROK TUTEJ" FontSize="36" Height="60" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="41" Margin="622,657,0,-72" Stroke="Black" VerticalAlignment="Top" Width="172" MouseDown="Rectangle_MouseDown"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="41" Margin="236,657,0,-72" Stroke="Black" VerticalAlignment="Top" Width="217" MouseDown="Rectangle_MouseDown_1"/>
         <Label x:Name="test" Content="Label" HorizontalAlignment="Left" Margin="647,614,0,0" VerticalAlignment="Top"/>
+        <Button Content="TestJesliAdmin" Click="Button_Click" HorizontalAlignment="Left" Margin="854,26,0,0" VerticalAlignment="Top" Width="109"/>
         <!--
         <Button Content="Button" HorizontalAlignment="Left" Margin="743,614,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <Label Content="PON" HorizontalAlignment="Left" Margin="256,141,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="#FFC7C7C7"/>

@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
+using System.Net.NetworkInformation;
 namespace Kalendarz_Kraków_Arena
 {
 
@@ -105,17 +106,33 @@ namespace Kalendarz_Kraków_Arena
                 MySqlDataReader reader = filmsCommand.ExecuteReader();
                 string passs = "";
                 string hashedPass = getHashSha256(pass.Password);
+                int id_Uzytkownika=-1;
                 while (reader.Read())
                 {
-                   
+                    id_Uzytkownika = reader.GetInt32("id_Uzytkownika");
                     passs = reader.GetString("Haslo");
                     //name += reader.GetString("model");
                 }
-
+                var macAddr = (         //poczatek wydobywania adresu mac
+                from nic in NetworkInterface.GetAllNetworkInterfaces()
+                where nic.OperationalStatus == OperationalStatus.Up
+                select nic.GetPhysicalAddress().ToString()
+                ).FirstOrDefault();    //koniec mac
+            
                 if (passs == hashedPass)
                 {
                     conn.Close();
+                    conn.Open();
+                    //MessageBoxResult result = MessageBox.Show("id usera " + id_Uzytkownika+" a mac to: "+macAddr.ToString(), "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    MySqlCommand filmsCommand2 = new MySqlCommand();
+                    filmsCommand2.CommandText="INSERT INTO historialogowania(Login,Mac) VALUES('" + id_Uzytkownika + "','" + macAddr.ToString() + "');";
+                    filmsCommand2.Connection=conn;                    
+                    filmsCommand2.ExecuteNonQuery();
+
+                    conn.Close();
                     Window Kalendarz = new Kalendarz();
+                    App.Current.MainWindow = Kalendarz;
                     Kalendarz.Show();
                     this.Close();
                 }
@@ -129,16 +146,30 @@ namespace Kalendarz_Kraków_Arena
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Zamknij(object sender, RoutedEventArgs e)
         {
-
-            
+            this.Close();
+        }
+        private void O_programie(object sender, RoutedEventArgs e)
+        {            
+            Window pom = new O_programie();
+            pom.Show();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Window ConnectionSettings = new ConnectionSettings();
             ConnectionSettings.Show();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
