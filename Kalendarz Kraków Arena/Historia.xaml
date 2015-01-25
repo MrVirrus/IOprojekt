@@ -1,0 +1,11 @@
+﻿<Window x:Class="Kalendarz_Kraków_Arena.Historia"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Title="Historia" Height="664" Width="1107" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#FF82D386" WindowState="Maximized" WindowStyle="None">
+    <Grid>
+        <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" IsReadOnly="True" Margin="10,71,0,0" VerticalAlignment="Top" />
+        <Button Content="Pobierz Historire Logowania" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="168" Height="28" Click="HLog" Grid.ColumnSpan="2"/>
+        <Button Content="Pobierz Historire Wydarzen" HorizontalAlignment="Left" Margin="201,13,0,0" VerticalAlignment="Top" Width="221" Height="25" Click="HRez"/>
+        <Button Content="exit" HorizontalAlignment="Left" Margin="975,13,0,0" VerticalAlignment="Top" Width="98" Height="35" Click="Button_Click_2"/>
+    </Grid>
+</Window>
