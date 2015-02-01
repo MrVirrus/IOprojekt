@@ -1,10 +1,10 @@
 ﻿<Window x:Class="Kalendarz_Kraków_Arena.Kalendarz"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Kalendarz" Height="800" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MinHeight="800" MinWidth="1000">
+        Title="Kalendarz" Width="1000" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" MinHeight="700" MinWidth="1000">
     <Grid Name="myGrid">
         <Menu VerticalAlignment="Top">
-            
+
 
             <MenuItem Header="Historia">
                 <MenuItem Header="Historia" Click="Historia_OpenWindow"/>
@@ -26,15 +26,12 @@
             </MenuItem>
         </Menu>
 
-        <Label x:Name="miesiac" Content="MIESIAC I ROK TUTEJ" FontSize="36" Height="60" HorizontalAlignment="Center" Margin="0,20,0,0" VerticalAlignment="Top"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="41" Margin="622,657,0,-72" Stroke="Black" VerticalAlignment="Top" Width="172" MouseDown="Rectangle_MouseDown"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="41" Margin="236,657,0,-72" Stroke="Black" VerticalAlignment="Top" Width="217" MouseDown="Rectangle_MouseDown_1"/>
-        <Label x:Name="test" Content="Label" HorizontalAlignment="Left" Margin="647,614,0,0" VerticalAlignment="Top"/>
+        <Grid Name="KafelkiKalendarz"></Grid>
+        
+        <Label x:Name="miesiac" Content="MIESIAC I ROK TUTEJ" FontSize="36" Height="60" HorizontalAlignment="Center" Margin="322,54,322,0" VerticalAlignment="Top"/>
         <Button Content="TestJesliAdmin" Click="Button_Click" HorizontalAlignment="Left" Margin="854,26,0,0" VerticalAlignment="Top" Width="109"/>
-        <!--
-        <Button Content="Button" HorizontalAlignment="Left" Margin="743,614,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Label Content="PON" HorizontalAlignment="Left" Margin="256,141,0,0" VerticalAlignment="Top" FontSize="36" FontWeight="Bold" Foreground="#FFC7C7C7"/>
--->
+        <Button Content="&gt;&gt;" Click="Button_Click_2" HorizontalAlignment="Left" Height="34" Margin="878,302,0,0" VerticalAlignment="Top" Width="85"/>
+        <Button Content="&lt;&lt;" Click="Button_Click_1" HorizontalAlignment="Left" Height="34" Margin="29,302,0,0" VerticalAlignment="Top" Width="85"/>
     </Grid>
 
 

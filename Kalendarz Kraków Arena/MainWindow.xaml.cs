@@ -92,7 +92,7 @@ namespace Kalendarz_Kraków_Arena
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-
+            
                 connectionString = decode("any.txt");
                 MySqlConnection conn;
 
@@ -141,8 +141,12 @@ namespace Kalendarz_Kraków_Arena
                     warn.Visibility = Visibility.Visible;
                 }
 
-
-
+            
+            
+            Window Kalendarz = new Kalendarz();
+            App.Current.MainWindow = Kalendarz;
+            Kalendarz.Show();
+            this.Close();
 
         }
 
