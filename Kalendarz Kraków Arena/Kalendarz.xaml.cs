@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +16,18 @@ using System.Windows.Shapes;
 
 namespace Kalendarz_Kraków_Arena
 {
-    
-    
+
+    class Event
+    {
+        public DateTime Od { get; set; }
+        public DateTime Do { get; set; }
+        public int IDOrganizatora { get; set; }
+        public Event(int IDOrganizatora, DateTime Od, DateTime Do){
+            this.IDOrganizatora = IDOrganizatora;
+            this.Od = Od;
+            this.Do = Do;
+        }
+    }
 
     public partial class Kalendarz : Window
     {
@@ -27,20 +39,47 @@ namespace Kalendarz_Kraków_Arena
         int aktualnymiesiac;
         int aktualnyrok;
         int aktualnydzien;
-
-
+        List<Event> Eventy = new List<Event>();
+  
         DateTime AktualnaData = System.DateTime.Now;
 
         Canvas aktualny, temp;
         public Kalendarz()
         {
-
+            PobierzDane();
             InitializeComponent();
             RysujKalendarz(AktualnaData.Year, AktualnaData.Month);
         }
 
+        private void PobierzDane()
+        {
+            string connectionString = "server=89.68.24.235; user id=user; password='Spectro2005'; database=ioproj";
+            MySqlConnection conn;
+
+            conn = new MySql.Data.MySqlClient.MySqlConnection(connectionString);
+            MySqlConnection.ClearPool(conn);
+            conn.Open();
+            //Nie działa czytanie procedury
+            //MySqlCommand filmsCommand = new MySqlCommand("call p_GetDates(" + Rok + ", " + Miesiac + ");", conn)
+            MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM rezerwacje", conn);
+            MySqlDataReader reader = filmsCommand.ExecuteReader();
+
+            DateTime Od, Do;
+            int idOrganizatora;
+
+            while (reader.Read())
+            {
+                idOrganizatora = reader.GetInt32("id_Organizatora");
+                Od = reader.GetDateTime("Od");
+                Do = reader.GetDateTime("Do");
+                Eventy.Add(new Event(idOrganizatora, Od, Do));
+            }
+            conn.Close();
+        }
+
         private void RysujKalendarz(int Rok, int Miesiac)
         {
+            List<Canvas> Kafelki = new List<Canvas>();
             //Obliczamy ilość dni w aktualnym miesiącu
             int dni = DateTime.DaysInMonth(Rok, Miesiac);
             //Ilość wierszy w danym miesiącu -> jeden tydzień
@@ -55,9 +94,10 @@ namespace Kalendarz_Kraków_Arena
                 border.Width = 100;
                 border.Height = 100;
                 //Tworzymy Canvas
-                Canvas Canvas = new Canvas() { Name = Convert.ToString("Kwadrat" + i), Height = 100, Width = 100, Margin = new Thickness(i % 7 * 102 + 139, liczba_wierszy * 102 + 40, 0, 0), Background = new SolidColorBrush(Color.FromRgb(244, 244, 245)), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                Canvas Canvas = new Canvas() { Name =  "Data" + (1+i).ToString("D2")+Miesiac.ToString("D2")+Rok.ToString() , Height = 100, Width = 100, Margin = new Thickness(i % 7 * 102 + 139, liczba_wierszy * 102 + 40, 0, 0), Background = new SolidColorBrush(Color.FromRgb(244, 244, 245)), HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
                 //Dodajemy border
                 Canvas.Children.Add(border);
+                Kafelki.Add(Canvas);
                 //Tworzymy label
                 Label numer = new Label() { Name = Convert.ToString("label" + i), Content = i + 1, FontSize = 10 };
                 //Dodajemy do obiektu CANVAS
@@ -73,7 +113,9 @@ namespace Kalendarz_Kraków_Arena
                 {
                     liczba_wierszy += 1;
                 }
+                
             }
+            RysujKwadraty(Kafelki, Rok, Miesiac);
         }
 
         private void RecMouseEnter(object sender, MouseEventArgs e)
@@ -98,6 +140,79 @@ namespace Kalendarz_Kraków_Arena
         private void RecMouseDown(object sender, MouseEventArgs e)
         {
             wybrany((Canvas)sender);
+        }
+
+        private void RysujKwadraty(List<Canvas> Kafelki, int Rok, int Miesiac)
+        {
+            foreach(Event e in Eventy)
+            {
+                foreach (Canvas c in Kafelki)
+                {
+                    string Nazwa = c.Name.Substring(4,8);
+                    DateTime NowaData = DateTime.ParseExact(Nazwa.Substring(4, 4) + "-" + Nazwa.Substring(2, 2) + "-" + Nazwa.Substring(0, 2), "yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture);
+                    if (e.Od.Date <= NowaData.Date && NowaData.Date <= e.Do.Date)
+                    {
+                        SolidColorBrush myBackground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                        if (e.IDOrganizatora == 1)
+                        {
+                            myBackground = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                            //Tworzymy border
+                            Border border = new Border();
+                            border.BorderBrush = Brushes.Black;
+                            border.BorderThickness = new Thickness(1);
+                            border.Width = 20;
+                            border.Height = 20;
+                            //Tworzymy Canvas
+                            Canvas Canvas = new Canvas() { Name = "Event" + e.IDOrganizatora + Nazwa, Height = 20, Width = 20, Margin = new Thickness(20, 20, 0, 0), Background = myBackground, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                            Canvas.Children.Add(border);
+                            c.Children.Add(Canvas);
+                        }
+                        else if (e.IDOrganizatora == 2)
+                        {
+                            myBackground = new SolidColorBrush(Color.FromRgb(0, 255, 0));
+                            //Tworzymy border
+                            Border border = new Border();
+                            border.BorderBrush = Brushes.Black;
+                            border.BorderThickness = new Thickness(1);
+                            border.Width = 20;
+                            border.Height = 20;
+                            //Tworzymy Canvas
+                            Canvas Canvas = new Canvas() { Name = "Event" + e.IDOrganizatora + Nazwa, Height = 20, Width = 20, Margin = new Thickness(50, 20, 0, 0), Background = myBackground, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                            Canvas.Children.Add(border);
+                            c.Children.Add(Canvas);
+                        }
+                        else if (e.IDOrganizatora == 3)
+                        {
+                            myBackground = new SolidColorBrush(Color.FromRgb(0, 0, 255));
+                            //Tworzymy border
+                            Border border = new Border();
+                            border.BorderBrush = Brushes.Black;
+                            border.BorderThickness = new Thickness(1);
+                            border.Width = 20;
+                            border.Height = 20;
+                            //Tworzymy Canvas
+                            Canvas Canvas = new Canvas() { Name = "Event" + e.IDOrganizatora + Nazwa, Height = 20, Width = 20, Margin = new Thickness(20, 50, 0, 0), Background = myBackground, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                            Canvas.Children.Add(border);
+                            c.Children.Add(Canvas);
+                        }
+                        else if (e.IDOrganizatora == 4)
+                        {
+                            myBackground = new SolidColorBrush(Color.FromRgb(255, 255, 0));
+                            //Tworzymy border
+                            Border border = new Border();
+                            border.BorderBrush = Brushes.Black;
+                            border.BorderThickness = new Thickness(1);
+                            border.Width = 20;
+                            border.Height = 20;
+                            //Tworzymy Canvas
+                            Canvas Canvas = new Canvas() { Name = "Event" + e.IDOrganizatora + Nazwa, Height = 20, Width = 20, Margin = new Thickness(50, 50, 0, 0), Background = myBackground, HorizontalAlignment = HorizontalAlignment.Left, VerticalAlignment = VerticalAlignment.Top };
+                            Canvas.Children.Add(border);
+                            c.Children.Add(Canvas);
+                        }
+                    }
+                }
+
+            }
         }
 
         public void wybrany(Canvas rec)
@@ -140,6 +255,8 @@ namespace Kalendarz_Kraków_Arena
 
             aktualny = temp;
 
+            Window okno = new DodajWydarzenie();
+            okno.Show();
         }
 
         public void on(Canvas rec)
