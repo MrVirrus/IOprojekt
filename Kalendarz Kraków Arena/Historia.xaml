@@ -6,6 +6,10 @@
         <DataGrid x:Name="DataGrid" HorizontalAlignment="Left" IsReadOnly="True" Margin="10,71,0,0" VerticalAlignment="Top" />
         <Button Content="Pobierz Historire Logowania" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="168" Height="28" Click="HLog" Grid.ColumnSpan="2"/>
         <Button Content="Pobierz Historire Wydarzen" HorizontalAlignment="Left" Margin="201,13,0,0" VerticalAlignment="Top" Width="221" Height="25" Click="HRez"/>
-        <Button Content="exit" HorizontalAlignment="Left" Margin="975,13,0,0" VerticalAlignment="Top" Width="98" Height="35" Click="Button_Click_2"/>
+        <Button Content="exit" HorizontalAlignment="Left" Margin="999,13,0,0" VerticalAlignment="Top" Width="98" Height="35" Click="Button_Click_2"/>
+        <Button Content="filter?" Click="Button_Click" HorizontalAlignment="Left" Margin="793,13,0,0" VerticalAlignment="Top" Width="75"/>
+        <TextBox x:Name="FilterBox" HorizontalAlignment="Left" Height="23" Margin="637,15,0,0" TextWrapping="Wrap" Text="Szukana wartość" VerticalAlignment="Top" Width="120"/>
+        <ComboBox x:Name="ColumsBox" HorizontalAlignment="Left" Margin="494,16,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBlock HorizontalAlignment="Left" Margin="619,16,0,0" TextWrapping="Wrap" Text="=" VerticalAlignment="Top" Height="19" Width="13"/>
     </Grid>
 </Window>
