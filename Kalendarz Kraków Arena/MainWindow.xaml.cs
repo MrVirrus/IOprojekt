@@ -91,7 +91,7 @@ namespace Kalendarz_Kraków_Arena
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            /*
+            
             
                 connectionString = decode("any.txt");
                 MySqlConnection conn;
@@ -131,19 +131,18 @@ namespace Kalendarz_Kraków_Arena
                     filmsCommand2.ExecuteNonQuery();
             
                     conn.Close();
-             * 
-             * */
+
                     Window Kalendarz = new Kalendarz();
                     App.Current.MainWindow = Kalendarz;
                     Kalendarz.Show();
                     this.Close();
-            /*
+            
                 }
                 else
                 {
                     warn.Visibility = Visibility.Visible;
                 }
-            */
+            
         }
 
         private void Zamknij(object sender, RoutedEventArgs e)
