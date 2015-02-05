@@ -1,8 +1,28 @@
 ﻿<Window x:Class="Kalendarz_Kraków_Arena.DodajWydarzenie"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DodajWydarzenie" Height="300" Width="300">
+        Title="Dodaj wydarzenie" Height="300" Width="600" ResizeMode="NoResize">
     <Grid>
-        
+        <TextBox Name="StanyRezerwacji" HorizontalAlignment="Left" Height="23" Margin="176,28,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="Organizator" HorizontalAlignment="Left" Height="23" Margin="176,56,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="OsobaRezerwujaca" HorizontalAlignment="Left" Height="23" Margin="436,84,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="NazwaOrganizatora" HorizontalAlignment="Left" Height="23" Margin="436,112,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120"/>
+
+        <DatePicker Name="Od" HorizontalAlignment="Left" Margin="176,86,0,0" VerticalAlignment="Top"/>
+        <DatePicker Name="Do" HorizontalAlignment="Left" Margin="176,113,0,0" VerticalAlignment="Top"/>
+        <DatePicker Name="EventOd" HorizontalAlignment="Left" Margin="436,26,0,0" VerticalAlignment="Top"/>
+        <DatePicker Name="EventDo" HorizontalAlignment="Left" Margin="436,56,0,0" VerticalAlignment="Top"/>
+
+        <Label Content="IdStanyRezerwacji" HorizontalAlignment="Left" Margin="49,24,0,0" VerticalAlignment="Top"/>
+        <Label Content="IdOrganizatora" HorizontalAlignment="Left" Margin="49,53,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.08,2.707"/>
+        <Label Content="Od" HorizontalAlignment="Left" Margin="49,80,0,0" VerticalAlignment="Top"/>
+        <Label Content="Do" HorizontalAlignment="Left" Margin="49,108,0,0" VerticalAlignment="Top"/>
+        <Label Content="EventOd" HorizontalAlignment="Left" Margin="317,28,0,0" VerticalAlignment="Top"/>
+        <Label Content="EventDo" HorizontalAlignment="Left" Margin="317,57,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.08,2.707"/>
+        <Label Content="OsobaRezerwujaca" HorizontalAlignment="Left" Margin="317,84,0,0" VerticalAlignment="Top"/>
+        <Label Content="NazwaOrganizacji" HorizontalAlignment="Left" Margin="317,112,0,0" VerticalAlignment="Top"/>
+        <Button Content="Zapisz" HorizontalAlignment="Center" Margin="0,0,0,40" VerticalAlignment="Bottom" Width="75" Click="ZapiszWydarzenie"/>
+
+
     </Grid>
 </Window>

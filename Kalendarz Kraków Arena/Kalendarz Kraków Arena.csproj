@@ -64,6 +64,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ZobaczWydarzenie.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Historia.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -86,6 +90,9 @@
     <Compile Include="DBconnect.cs" />
     <Compile Include="DodajWydarzenie.xaml.cs">
       <DependentUpon>DodajWydarzenie.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ZobaczWydarzenie.xaml.cs">
+      <DependentUpon>ZobaczWydarzenie.xaml</DependentUpon>
     </Compile>
     <Compile Include="Historia.xaml.cs">
       <DependentUpon>Historia.xaml</DependentUpon>

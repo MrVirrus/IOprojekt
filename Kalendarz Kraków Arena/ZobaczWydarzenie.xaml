@@ -1,0 +1,8 @@
+﻿<Window x:Class="Kalendarz_Kraków_Arena.ZobaczWydarzenie"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Szczegóły wydarzenia" Height="300" Width="450" ResizeMode="NoResize">
+    <Grid Name="DodajWydarzenieGrid">
+        
+    </Grid>
+</Window>

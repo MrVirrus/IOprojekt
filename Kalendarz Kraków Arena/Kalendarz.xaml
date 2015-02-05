@@ -5,6 +5,9 @@
     <Grid Name="myGrid">
         <Menu VerticalAlignment="Top">
 
+            <MenuItem Header="Wydarzenie">
+                <MenuItem Header="Dodaj" Click="DodajWydarzenie_OpenWindow"/>
+            </MenuItem>
 
             <MenuItem Header="Historia">
                 <MenuItem Header="Historia" Click="Historia_OpenWindow"/>

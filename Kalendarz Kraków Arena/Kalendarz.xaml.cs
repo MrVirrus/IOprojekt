@@ -17,15 +17,27 @@ using System.Windows.Shapes;
 namespace Kalendarz_Kraków_Arena
 {
 
-    class Event
+    public class Event
     {
+        #region Zmapowane pola z tabeli Rezerwacje
         public DateTime Od { get; set; }
         public DateTime Do { get; set; }
+        public DateTime EventOd { get; set; }
+        public DateTime EventDo { get; set; }
         public int IDOrganizatora { get; set; }
-        public Event(int IDOrganizatora, DateTime Od, DateTime Do){
+        public int StanRezerwacji { get; set; }
+        public string OsobaRezerwujaca { get; set; }
+        public string NazwaOrganizacji { get; set; }
+        #endregion
+        public Event(int IDOrganizatora, int StanRezerwacji, DateTime Od, DateTime Do, DateTime EventOd, DateTime EventDo, string OsobaRezerwujaca, string NazwaOrganizacji){
             this.IDOrganizatora = IDOrganizatora;
+            this.StanRezerwacji = StanRezerwacji;
             this.Od = Od;
             this.Do = Do;
+            this.EventOd = EventOd;
+            this.EventDo = EventDo;
+            this.OsobaRezerwujaca = OsobaRezerwujaca;
+            this.NazwaOrganizacji = NazwaOrganizacji;
         }
     }
 
@@ -64,15 +76,21 @@ namespace Kalendarz_Kraków_Arena
             MySqlCommand filmsCommand = new MySqlCommand("SELECT * FROM rezerwacje", conn);
             MySqlDataReader reader = filmsCommand.ExecuteReader();
 
-            DateTime Od, Do;
-            int idOrganizatora;
+            DateTime Od, Do, EventOd, EventDo;
+            int idOrganizatora, idStanRezerwacji;
+            string OsobaRezerwujaca, NazwaOrganizacji;
 
             while (reader.Read())
             {
                 idOrganizatora = reader.GetInt32("id_Organizatora");
+                idStanRezerwacji = reader.GetInt32("id_StanyRezerwacji");
                 Od = reader.GetDateTime("Od");
                 Do = reader.GetDateTime("Do");
-                Eventy.Add(new Event(idOrganizatora, Od, Do));
+                EventOd = reader.GetDateTime("EventOd");
+                EventDo = reader.GetDateTime("EventDo");
+                OsobaRezerwujaca = reader.GetString("OsobaRezerwujaca");
+                NazwaOrganizacji = reader.GetString("NazwaOrganizacji");
+                Eventy.Add(new Event(idOrganizatora, idStanRezerwacji, Od, Do, EventOd, EventDo, OsobaRezerwujaca, NazwaOrganizacji));
             }
             conn.Close();
         }
@@ -255,7 +273,19 @@ namespace Kalendarz_Kraków_Arena
 
             aktualny = temp;
 
-            Window okno = new DodajWydarzenie();
+            List<Event> eventyKafelka = new List<Event>();
+
+            foreach (Event e in Eventy)
+            {
+                string Nazwa = rec.Name.Substring(4,8);
+                    DateTime NowaData = DateTime.ParseExact(Nazwa.Substring(4, 4) + "-" + Nazwa.Substring(2, 2) + "-" + Nazwa.Substring(0, 2), "yyyy-MM-dd",System.Globalization.CultureInfo.InvariantCulture);
+                    if (e.Od.Date <= NowaData.Date && NowaData.Date <= e.Do.Date)
+                    {
+                        eventyKafelka.Add(e);
+                    }
+            }
+
+            Window okno = new ZobaczWydarzenie(eventyKafelka);
             okno.Show();
         }
 
@@ -336,6 +366,22 @@ namespace Kalendarz_Kraków_Arena
             historia.Show();
         }
 
+        private void DodajWydarzenie_OpenWindow(object sender, RoutedEventArgs e)
+        {
+            Window DodajWydarzenie = new DodajWydarzenie();
+            DodajWydarzenie.Closed += OdswiezKalendarz;
+            DodajWydarzenie.Show();
+        }
+
+        private void OdswiezKalendarz(object sender, EventArgs e)
+        {
+            Eventy.Clear();
+            PobierzDane();
+            KafelkiKalendarz.Children.Clear();
+            RysujKalendarz(AktualnaData.Year, AktualnaData.Month);
+            Odswiez(AktualnaData);
+        }
+
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             KafelkiKalendarz.Children.Clear();
@@ -352,6 +398,6 @@ namespace Kalendarz_Kraków_Arena
             RysujKalendarz(NowaData.Year, NowaData.Month);
             Odswiez(NowaData);
             AktualnaData = NowaData;
-        }  
+        }
     }
 }
